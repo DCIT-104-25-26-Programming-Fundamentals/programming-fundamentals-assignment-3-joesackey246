@@ -15,9 +15,7 @@
 // HOW TO RUN THIS PROGRAM
 // -----------------------------------------------------------------------------
 // 1. Install the input library (only once):  npm install readline-sync
-// 2. Run the program:                        node assignment_05_fibonacci_sequence.js
-//
-// -----------------------------------------------------------------------------
+// 2. Run the program:                        -------
 // PART A — Print the First N Terms
 // -----------------------------------------------------------------------------
 // - Ask the user how many terms (N) to display.
@@ -54,4 +52,70 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 5
+// TASK: Fibonacci Sequence Generator
+// =============================================================================
 
+const readlineSync = require('readline-sync');
+
+// Step 1 (Part A): Generate and print the first N Fibonacci terms.
+function printFibonacciTerms(n) {
+    const sequence = [];
+    let a = 0;
+    let b = 1;
+
+    for (let i = 0; i < n; i++) {
+        sequence.push(a);
+        // Move to the next pair: b becomes the new "a", a+b becomes the new "b"
+        const next = a + b;
+        a = b;
+        b = next;
+    }
+
+    console.log("Fibonacci sequence: " + sequence.join(' '));
+}
+
+// Step 2 (Part B): Check whether a given number appears in the sequence.
+function isFibonacciNumber(num) {
+    // Special case: 0 is always the first Fibonacci number.
+    if (num < 0) {
+        return false;
+    }
+
+    let a = 0;
+    let b = 1;
+
+    // Generate Fibonacci numbers using a loop until we reach or pass num.
+    while (a < num) {
+        const next = a + b;
+        a = b;
+        b = next;
+    }
+
+    // If we landed exactly on num, it's a Fibonacci number.
+    return a === num;
+}
+
+// Step 3: main() ties both parts together.
+function main() {
+    console.log("=== PART A: Print the First N Terms ===");
+    const n = readlineSync.questionInt("How many terms? ");
+
+    if (n <= 0) {
+        console.log("Error: N must be a positive integer.");
+    } else {
+        printFibonacciTerms(n);
+    }
+
+    console.log("\n=== PART B: Check if a Number Belongs to the Sequence ===");
+    const num = readlineSync.questionInt("Enter a number to check: ");
+
+    if (isFibonacciNumber(num)) {
+        console.log(`${num} is a Fibonacci number.`);
+    } else {
+        console.log(`${num} is NOT a Fibonacci number.`);
+    }
+}
+
+main();
