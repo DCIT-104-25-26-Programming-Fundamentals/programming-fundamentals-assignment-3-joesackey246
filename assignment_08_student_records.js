@@ -84,4 +84,118 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 8
+// TASK: Student Record Management System
+// =============================================================================
+
+const readlineSync = require('readline-sync');
+
+let students = [];
+
+// Step 1: Display the menu.
+function showMenu() {
+    console.log("\n================================");
+    console.log("   STUDENT RECORD SYSTEM MENU");
+    console.log("================================");
+    console.log("1. Add student");
+    console.log("2. Display all students");
+    console.log("3. Calculate average score");
+    console.log("4. Quit");
+}
+
+// Step 2: Calculate the average of an array of scores.
+function calculateAverage(scores) {
+    let sum = 0;
+    for (let i = 0; i < scores.length; i++) {
+        sum += scores[i];
+    }
+    return sum / scores.length;
+}
+
+// Step 3: Add a new student.
+function addStudent() {
+    const name = readlineSync.question("Student name: ");
+    const id = readlineSync.questionInt("Student ID: ");
+    const numScores = readlineSync.questionInt("How many scores? ");
+
+    const scores = [];
+    for (let i = 0; i < numScores; i++) {
+        const score = readlineSync.questionInt(`Enter score ${i + 1}: `);
+        scores.push(score);
+    }
+
+    const student = { name: name, id: id, scores: scores };
+    students.push(student);
+
+    console.log(`Student "${name}" added successfully.`);
+}
+
+// Step 4: Display all students in a formatted table.
+function displayAllStudents() {
+    if (students.length === 0) {
+        console.log("No students have been added yet.");
+        return;
+    }
+
+    console.log("\nName            ID          Scores              Average");
+    console.log("--------------------------------------------------------------");
+
+    for (let i = 0; i < students.length; i++) {
+        const student = students[i];
+        const average = calculateAverage(student.scores);
+
+        console.log(
+            `${student.name.padEnd(16)} ${student.id.toString().padEnd(11)} ` +
+            `${student.scores.join(', ').padEnd(19)} ${average.toFixed(2)}`
+        );
+    }
+}
+
+// Step 5: Find a student by ID and print their average score.
+function calculateAverageForStudent() {
+    const id = readlineSync.questionInt("Enter student ID: ");
+
+    // Search through the array for a matching ID.
+    let foundStudent = null;
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].id === id) {
+            foundStudent = students[i];
+            break;
+        }
+    }
+
+    if (foundStudent === null) {
+        console.log("Error: No student found with that ID.");
+        return;
+    }
+
+    const average = calculateAverage(foundStudent.scores);
+    console.log(`${foundStudent.name}'s average score: ${average.toFixed(2)}`);
+}
+
+// Step 6: main() runs the menu loop until the user quits.
+function main() {
+    let running = true;
+
+    while (running) {
+        showMenu();
+        const choice = readlineSync.questionInt("Enter your choice (1-4): ");
+
+        if (choice === 1) {
+            addStudent();
+        } else if (choice === 2) {
+            displayAllStudents();
+        } else if (choice === 3) {
+            calculateAverageForStudent();
+        } else if (choice === 4) {
+            console.log("Goodbye!");
+            running = false;
+        } else {
+            console.log("Error: Please enter a number between 1 and 4.");
+        }
+    }
+}
+
+main();
 
