@@ -43,3 +43,42 @@
 // =============================================================================
 
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 1
+// =============================================================================
+
+const readlineSync = require('readline-sync');
+
+// Step 1: Function that checks whether n is prime.
+function isPrime(n) {
+    // Numbers less than 2 are NOT prime.
+    if (n < 2) {
+        return false;
+    }
+
+    // Step 2: Check for divisors from 2 up to sqrt(n).
+    // If n had a factor larger than its square root, it would also
+    // have a matching factor smaller than the square root, so we
+    // don't need to check any further than that.
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            return false;
+        }
+    }
+
+    // Step 3: No divisors found, so n is prime.
+    return true;
+}
+
+// Step 4: main() reads input, calls isPrime(), and prints the result.
+function main() {
+    const num = readlineSync.questionInt("Enter a number: ");
+
+    if (isPrime(num)) {
+        console.log(`${num} is a prime number.`);
+    } else {
+        console.log(`${num} is NOT a prime number.`);
+    }
+}
+
+main();
