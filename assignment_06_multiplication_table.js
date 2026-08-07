@@ -59,4 +59,46 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 6
+// TASK: Multiplication Table Generator
+// =============================================================================
 
+const readlineSync = require('readline-sync');
+
+// Step 1 (Part A): Print the multiplication table for a single number, 1 to 12.
+function printTable(num) {
+    console.log(`Multiplication Table for ${num}:`);
+    for (let i = 1; i <= 12; i++) {
+        const result = num * i;
+        // Pad the multiplier and result for a neat, aligned look
+        console.log(`${num}  x  ${i.toString().padStart(2)}  =  ${result}`);
+    }
+}
+
+// Step 2 (Part B): Print multiplication tables for every number from 1 to N.
+function printTablesUpToN(n) {
+    for (let num = 1; num <= n; num++) {
+        printTable(num);
+        console.log("---------------------------");
+    }
+}
+
+// Step 3: main() ties both parts together.
+function main() {
+    console.log("=== PART A: Single Table ===");
+    const num = readlineSync.questionInt("Enter a number: ");
+    printTable(num);
+
+    console.log("\n=== PART B: Tables from 1 to N ===");
+    const n = readlineSync.questionInt("Enter N: ");
+
+    if (n <= 0) {
+        console.log("Error: N must be a positive integer.");
+        return;
+    }
+
+    printTablesUpToN(n);
+}
+
+main();
